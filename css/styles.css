@@ -113,6 +113,7 @@ body{
     border: none;
     cursor: pointer;
     font-size: 20px;
+    margin-right: 10px;
 }
 
 .heading .right_button:hover {

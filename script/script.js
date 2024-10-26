@@ -86,9 +86,31 @@ window.addEventListener("click", function(event) {
     }
 });
 
+// Multiple Schedule Modal
+var multipleScheduleModal = document.getElementById("multipleScheduleModal");
+var multipleScheduleBtn = document.getElementById("multipleScheduleBtn");
+var multipleScheduleClose = multipleScheduleModal.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal
+multipleScheduleBtn.addEventListener("click", function() {
+    multipleScheduleModal.style.display = "block";
+});
+
+// When the user clicks on <span> (x), close the modal
+multipleScheduleClose.addEventListener("click", function() {
+    multipleScheduleModal.style.display = "none";
+});
+
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener("click", function(event) {
+    if (event.target == multipleScheduleModal) {
+        multipleScheduleModal.style.display = "none";
+    }
+});
+
 // Generate Schedule Modal
 var generateScheduleModal = document.getElementById("generateScheduleModal");
-var generateScheduleBtn = document.getElementById("generateScheduleBtn");
+var generateScheduleBtn = document.getElementById("generateScheduleBtn"); // Add a button with this ID to trigger the modal
 var generateScheduleClose = generateScheduleModal.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal
@@ -108,7 +130,33 @@ window.addEventListener("click", function(event) {
     }
 });
 
+// Checkbox behavior for 'Select All Nurses' in generateSchedule
+document.addEventListener('DOMContentLoaded', function() {
+    const selectAllNursesGenerate = document.getElementById('selectAllNursesGenerate');
+    const nurseCheckboxesGenerate = document.querySelectorAll('input[name="nurse_id[]"]:not(#selectAllNursesGenerate)');
 
+    // Event listener for "All Nurses" checkbox
+    selectAllNursesGenerate.addEventListener('change', function() {
+        // Check or uncheck all individual nurse checkboxes based on "All Nurses" checkbox
+        nurseCheckboxesGenerate.forEach(function(checkbox) {
+            checkbox.checked = selectAllNursesGenerate.checked;
+        });
+    });
+
+    // Optional: Add event listeners for individual nurse checkboxes
+    nurseCheckboxesGenerate.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            // If any individual checkbox is unchecked, uncheck "All Nurses"
+            if (!checkbox.checked) {
+                selectAllNursesGenerate.checked = false;
+            }
+            // If all individual checkboxes are checked, check "All Nurses"
+            if (Array.from(nurseCheckboxesGenerate).every(checkbox => checkbox.checked)) {
+                selectAllNursesGenerate.checked = true;
+            }
+        });
+    });
+});
 
 
 // Prevent context menu from appearing
