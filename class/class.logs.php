@@ -12,27 +12,14 @@ class Log {
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Enable exceptions for better error handling
     }
 
-    public function add_log($log_action, $log_description, $nurse_id) {
-        $adm_id = $_SESSION['adm_id'] ?? null; // Ensure session is started and get admin ID
+    public function addLog($log_action, $log_description, $adm_id, $nurse_id) {
         $log_date_managed = date('Y-m-d');
-        $log_time_managed = date('H:i:s');
+        $log_time_managed = date('H:i:s'); 
 
-        // Prepare the insert query
-        $stmt = $this->conn->prepare("INSERT INTO logs (log_action, log_description, log_time_managed, log_date_managed, adm_id, nurse_id) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bindValue(1, $log_action);
-        $stmt->bindValue(2, $log_description);
-        $stmt->bindValue(3, $log_time_managed);
-        $stmt->bindValue(4, $log_date_managed);
-        $stmt->bindValue(5, $adm_id);
-        $stmt->bindValue(6, $nurse_id);
+        $log_insert_query = "INSERT INTO logs (log_action, log_description, log_time_managed, log_date_managed, adm_id, nurse_id) 
+                             VALUES ('$log_action', '$log_description', '$log_time_managed', '$log_date_managed', '$adm_id', '$nurse_id')";
 
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            // Log error to PHP error log
-            error_log("Log insert error: " . $stmt->errorInfo()[2]);
-            return false;
-        }
+        return mysqli_query($this->con, $log_insert_query);
     }
 
     public function list_logs() {

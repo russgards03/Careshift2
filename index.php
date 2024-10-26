@@ -3,6 +3,7 @@ include_once 'class/class.nurse.php';
 include_once 'class/class.admin.php';
 include_once 'class/class.logs.php';
 include_once 'class/class.leave.php';
+include_once 'class/class.reports.php';
 include 'config/config.php';
 
 /*Parameter variables for the navbar*/
@@ -14,7 +15,8 @@ $id = (isset($_GET['id']) && $_GET['id'] != '') ? $_GET['id'] : '';
 $nurse = new Nurse();
 $admin = new Admin();
 $log = new Log();
-$leave = new Leave; 
+$leave = new Leave(); 
+$report = new Report();
 
 /*Login Verifier (Deploys Login Check Method from another file)*/
 if(!$admin->get_session()){
